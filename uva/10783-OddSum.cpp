@@ -4,7 +4,6 @@ using namespace std;
 
 int main() {
     unsigned int a, b, T, i;
-    unsigned long sum;
 
     cin >> T;
 
@@ -23,15 +22,32 @@ int main() {
         if (b % 2 == 0)
             b--;
 
-        sum = 0;
+        unsigned long sum = 0;
+
+        /**
+         *To find how many elements in between a and b
+         *a + (ith element - 1) * 2
+         *start value + 2 * index of that element
+         *1 3 5 7 9
+         *to get 7 (1 + 2*(4-1))
+         *
+         *To get nth element b = a + 2(n-1)
+         *b - a = 2n - 2
+         *(b - a + 2) / 2 = n
+         */
+
+        int n = (b - a + 2) / 2;
+
+        /**
+         *Arithmetic sum
+         *http://en.wikipedia.org/wiki/Arithmetic_sequence#Sum
+         *
+         *a, a+x, a+x+x, a+x+x+x...
+         *sum is n*(a + a+x..xn) / 2
+         */
 
 
-        while(a <= b) {
-            sum += a;
-            a += 2;
-        }
-
-        cout << "Case " << i + 1 << ": " << sum << endl;
+        cout << "Case " << i + 1 << ": " << n * (a+b) / 2 << endl;
     }
     return 0;
 }
