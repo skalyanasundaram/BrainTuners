@@ -57,6 +57,72 @@ int train_swap_count(unsigned int boggies[], int size)
     return count;
 }
 
+void swap(unsigned int boggies[], int left, int right)
+{
+    int temp = boggies[left];
+    boggies[left] = boggies[right];
+    boggies[right] = temp;
+}
+
+int merge(unsigned int boggies[], int start, int mid, int end)
+{
+    int invertion = 0, i = 0, j = 0, k = 0;
+    int s1 = mid - start + 1,
+        s2 = end - mid;
+    unsigned int left[50], right[50];
+
+    for (i = 0; i < s1; i++)
+    {
+        left[i] = boggies[i + start];
+    }
+    for (i = 0; i < s2; i++)
+    {
+        right[i] = boggies[i + mid + 1];
+    }
+
+    i = j = 0;
+    k = start;
+    while (i < s1 && j < s2)
+    {
+        if (left[i] > right[j])
+        {
+            invertion += s1 - i;
+            boggies[k++] = right[j++];
+        }
+        else
+        {
+            boggies[k++] = left[i++];
+        }
+    }
+
+    while (i < s1)
+    {
+        boggies[k++] = left[i++];
+    }
+    while (j < s2)
+    {
+        boggies[k++] = right[j++];
+    }
+
+    return invertion;
+}
+
+// still that not useful
+int train_swap_merge_sort(unsigned int boggies[], int start, int end)
+{
+    int invertion = 0;
+
+    if (start < end)
+    {
+        int mid = (start + end) / 2;
+        invertion += train_swap_merge_sort(boggies, start, mid);
+        invertion += train_swap_merge_sort(boggies, mid + 1, end);
+        invertion += merge(boggies, start, mid, end);
+    }
+
+    return invertion;
+}
+
 int main() {
     int N = 0, i = 0;
     unsigned int size, boggies[52] = { 0 };
@@ -74,7 +140,7 @@ int main() {
             cin >> boggies[i];
         }
 
-        cout << "Optimal train swapping takes " << train_swap_count(boggies, size) << " swaps." << endl;
+        cout << "Optimal train swapping takes " << train_swap_merge_sort(boggies, 0, size-1) << " swaps." << endl;
         N--;
     }
     
