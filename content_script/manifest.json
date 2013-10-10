@@ -1,0 +1,10 @@
+{
+    "manifest_version":         2,
+    "content_scripts":          [ {
+        "js":       [ "UvaOnlineJudgeiframeExpander.js" ],
+        "matches":  [ "http://uva.onlinejudge.org/*page=show_problem*" ]
+    } ],
+    "description":              "Expands the iframe content of the uva online judge site",
+    "name":                     "Uva IFrame expander",
+    "version":                  "1"
+}
